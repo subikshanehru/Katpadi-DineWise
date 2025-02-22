@@ -115,6 +115,67 @@
       margin: 20px auto;
       display: none;
     }
+    .modal {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0px 0px 15px rgba(0,0,0,0.6);
+      max-width: 400px;
+      width: 90%;
+    }
+
+
+    .modal-content h3 {
+      margin-top: 0;
+    }
+
+    button#goToRequirementPage {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin-top: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button#goToRequirementPage:hover {
+      background: #0056b3;
+    }
+
+    .dialog-box {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      z-index: 1000;
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    
   </style>
 </head>
 <body>
@@ -162,19 +223,25 @@
     // Evaluate if a hotel matches the user's selected food types
     function matchFoodType(userFoodTypes, hotelFoodTypes) {
       if (!Array.isArray(hotelFoodTypes)) return false;
+
+      const lowerHotelFoodTypes = hotelFoodTypes.map(ft => ft.toLowerCase());
+
       const userHasPureVeg = userFoodTypes.includes("purevegetarian");
       const userHasVegNonVeg = userFoodTypes.includes("vegetariannonvegetarian");
 
       if (userHasPureVeg && userHasVegNonVeg) {
-        return true;
+          return true; // If the user wants both, allow all hotels
       }
-      if (userHasPureVeg && !userHasVegNonVeg) {
-        return isExclusivelyVeg(hotelFoodTypes);
+
+      if (userHasPureVeg) {
+          return lowerHotelFoodTypes.includes("purevegetarian"); 
+          // Now it allows hotels that have "purevegetarian" even if they also have "nonvegetarian"
       }
-      if (!userHasPureVeg && userHasVegNonVeg) {
-        const lower = hotelFoodTypes.map(ft => ft.toLowerCase());
-        return lower.includes("nonvegetarian");
+
+      if (userHasVegNonVeg) {
+          return lowerHotelFoodTypes.includes("nonvegetarian");
       }
+
       return false;
     }
 
@@ -221,10 +288,16 @@
           });
 
           if (filteredHotels.length === 0) {
-            document.getElementById("hotel-list").innerHTML =
-              "<p>No recommended hotels found based on your selection.</p>";
-            return;
+          openNoHotelsDialog();
+          return;
           }
+
+          // Sort hotels by rating (descending order)
+          filteredHotels.sort((a, b) => {
+            const ratingA = a[1].rating ? parseFloat(a[1].rating) : 0;
+            const ratingB = b[1].rating ? parseFloat(b[1].rating) : 0;
+            return ratingB - ratingA; // Higher rating first
+          });
 
           // Build hotel cards
           const hotelsHTML = filteredHotels.map(([key, hotel]) => {
@@ -260,8 +333,59 @@
         });
     }
 
-    // Modal & View Map
-    function openActionModal(key, hotel) {
+    function openNoHotelsDialog() {
+      // Remove any existing modal if present
+      const existingModal = document.getElementById("noHotelsModal");
+      if (existingModal) {
+        existingModal.remove();
+      }
+
+      // Create the dialog HTML dynamically
+      const modalHTML = `
+          <div id="noHotelsModal" class="modal">
+              <div class="modal-content">
+                  <h3>No Hotels Found</h3>
+                  <p>No hotels found based on your preferences. Try again with a different combination of cuisine or different location.</p>
+                  <button id="goToRequirementPage">Go to Requirement Page</button>
+              </div>
+          </div>
+      `;
+
+      // Append to body
+      document.body.insertAdjacentHTML("beforeend", modalHTML);
+
+      // Add event listener for the button
+      document.getElementById("goToRequirementPage").addEventListener("click", function () {
+        window.location.href = "requirement.html"; // Change this to the actual requirement page
+      });
+
+      // Apply styles directly via JavaScript (if CSS is overridden)
+      const modal = document.getElementById("noHotelsModal");
+      modal.style.display = "flex";
+      modal.style.alignItems = "center";
+      modal.style.justifyContent = "center";
+      modal.style.position = "fixed";
+      modal.style.top = "0";
+      modal.style.left = "0";
+      modal.style.width = "100vw";
+      modal.style.height = "100vh";
+      modal.style.background = "rgba(0,0,0,0.5)";
+      modal.style.zIndex = "1000";
+
+      const modalContent = modal.querySelector(".modal-content");
+      modalContent.style.background = "white";
+      modalContent.style.padding = "20px";
+      modalContent.style.borderRadius = "10px";
+      modalContent.style.textAlign = "center";
+      modalContent.style.boxShadow = "0px 0px 15px rgba(0,0,0,0.6)";
+      modalContent.style.maxWidth = "400px";
+      modalContent.style.width = "90%";
+    }
+
+
+
+      // Modal & View Map
+      function openActionModal(key, hotel) {
       // Remove underscores from the displayed name in the modal
       const displayName = key.replace(/_/g, " ");
       document.getElementById("modalHotelName").innerText = hotel.name || displayName;

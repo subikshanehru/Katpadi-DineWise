@@ -1,9 +1,8 @@
 {
   "hotels": {
-    "default": {
-      "name": "Hive Food Street",
-      "food_type": ["vegetarian", "nonvegetarian"],
-      "cuisine": ["southindian", "northindian", "chinese", "beverages", "biryani"],
+    "Hive Food Street": {
+      "food_type": ["purevegetarian","vegetarian", "nonvegetarian"],
+      "cuisine": ["southindian", "northindian", "chinese", "seafood", "arabian","beverages","italian", "biryani"],
       "location": "vit_road_katpadi",
       "rating": 4.7,
       "mapEmbed":"<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.0838633491067!2d79.1593551101132!3d12.96648531493866!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bad470008de892b%3A0x45c25dc13c861e09!2sHIVE%20FOOD%20STREET!5e0!3m2!1sen!2sin!4v1740119204883!5m2!1sen!2sin\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>"
@@ -15,28 +14,28 @@
       "rating": 4.2,
       "mapEmbed":"<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.327375278476!2d79.13417241011295!3d12.950891215280341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bad47b373a17335%3A0x88a71872529dc036!2sAmirtha%20fine%20dining!5e0!3m2!1sen!2sin!4v1739906700284!5m2!1sen!2sin\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>"
     },
-    "The_vellore_kitchen": {
+    "The_Vellore_Kitchen": {
       "food_type": ["vegetarian", "nonvegetarian"],
       "cuisine": ["southindian", "chinese", "northindian", "beverages", "seafood", "arabian", "italian"],
       "location": "gandhi_nagar_katpadi",
       "rating": 4.5,
       "mapEmbed":"<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.3442778863364!2d79.13477541011292!3d12.949808115304075!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bad47971a736435%3A0x512dc27a99ff6a1b!2sThe%20Vellore%20Kitchen%20%7C%20Gandhi%20Nagar!5e0!3m2!1sen!2sin!4v1739907210565!5m2!1sen!2sin\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>"
     },
-    "Thambri_biryani_kadai": {
+    "Thambri_Biryani_Kadai": {
       "food_type": ["vegetarian", "nonvegetarian"],
       "cuisine": ["southindian", "chinese", "beverages", "seafood", "arabian"],
       "location": "gandhi_nagar_katpadi",
       "rating": 4.5,
       "mapEmbed":"<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.147179697206!2d79.13489461011318!3d12.962432415027568!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bad472a2ca0c20f%3A0x9621ebb32da35be2!2sThambi%20biryani!5e0!3m2!1sen!2sin!4v1740119337201!5m2!1sen!2sin\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>"
     },
-    "Darling_nammma_veedu": {
+    "Darling_Namma_Veedu": {
       "food_type": ["vegetarian", "nonvegetarian"],
       "cuisine": ["southindian", "chinese", "northindian", "beverages", "seafood", "arabian", "italian"],
       "location": "gandhi_nagar_katpadi",
       "rating": 3.8,
       "mapEmbed":"<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d62210.3334794401!2d79.09617837431696!3d12.962518024567485!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bad47693749024b%3A0xe6772afb0fa1d737!2sDarling%20Namma%20Veedu!5e0!3m2!1sen!2sin!4v1740119507814!5m2!1sen!2sin\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>"
     },
-    "Baby_restaurant": {
+    "Baby_Restaurant": {
       "food_type": ["vegetarian", "nonvegetarian"],
       "cuisine": ["southindian", "northindian", "biryani", "chinese"],
       "location": "vit_road_katpadi",
