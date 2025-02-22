@@ -6,92 +6,118 @@
   <title>Requirement Collector Module</title>
   <style>
     body {
-    font-family: sans-serif;
-    background-image: url("https://t4.ftcdn.net/jpg/02/84/46/89/360_F_284468940_1bg6BwgOfjCnE3W0wkMVMVqddJgtMynE.jpg");
-    background-size: cover;
-  }
-
-  h1 {
-    text-align: center;
-    color: white;
-  }
-
-  form {
-    display: flex;
-    flex-direction: column;
-    width: 400px;
-    margin: 20px auto;
-    padding: 20px;
-    border-radius: 8px;
-    background-color: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-
-  label {
-    font-weight: bold;
-    margin-top: 10px;
-  }
-
-  input, select {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-
-  /* Fix checkbox alignment issue */
-  .checkbox-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; /* Aligns checkboxes properly */
-  }
-
-  .checkbox-label {
-    display: flex;
-    align-items: center;
-    gap: 8px; /* Fix spacing issues */
-    white-space: nowrap; /* Prevents text wrapping */
-    font-size: 14px;
-  }
-
-  /* Fix for Safari checkbox alignment */
-  .checkbox-label input[type="checkbox"] {
-    transform: scale(1.2); /* Makes checkboxes more consistent across browsers */
-    margin-right: 8px; /* Ensures proper spacing */
-    vertical-align: middle;
-  }
-
-  /* Button Styling */
-  .button {
-    background-color: #007bff;
-    color: white;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 4px;
-    margin-top: 15px;
-  }
-
-  .button:hover {
-    background-color: #0056b3;
-  }
-
-  /* Error Message Styling */
-  .error-message {
-    color: red;
-    text-align: center;
-    font-size: 14px;
-    margin-top: 5px;
-  }
-
-  /* Safari-Specific Fixes */
-  @supports (-webkit-appearance: none) {
-    input[type="checkbox"] {
-      transform: scale(1.2); /* Only applies in Safari */
+      font-family: sans-serif;
+      background-image: url("https://t4.ftcdn.net/jpg/02/84/46/89/360_F_284468940_1bg6BwgOfjCnE3W0wkMVMVqddJgtMynE.jpg");
+      background-size: cover;
     }
-  }
+
+    h1 {
+      text-align: center;
+      color: white;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      width: 400px;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 8px;
+      background-color: white;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    /* Fix checkbox alignment issue */
+    .checkbox-container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start; /* Aligns checkboxes properly */
+    }
+
+    /* Ensure checkboxes and text align properly */
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 8px; /* Ensures spacing between checkbox and label */
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    /* Safari-specific fixes */
+    @supports (-webkit-appearance: none) {
+      .checkbox-label {
+        display: flex;
+        align-items: center;
+      }
+
+      input[type="checkbox"] {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 22px; /* Increase checkbox size */
+        height: 22px;
+        border: 2px solid #007bff;
+        border-radius: 4px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        background-color: white;
+      }
+
+      /* Custom checkmark when checked */
+      input[type="checkbox"]:checked {
+        background-color: #007bff;
+        border-color: #007bff;
+      }
+        
+      /* Custom checkmark styling */
+      input[type="checkbox"]:checked::before {
+        content: "✔";
+        font-size: 18px; /* Increase tick size */
+        color: white;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
+    /* Button Styling */
+    .button {
+      background-color: #007bff;
+      color: white;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 4px;
+      margin-top: 15px;
+    }
+
+    .button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Error Message Styling */
+    .error-message {
+      color: red;
+      text-align: center;
+      font-size: 14px;
+      margin-top: 5px;
+    }
 
   </style>
 </head>
