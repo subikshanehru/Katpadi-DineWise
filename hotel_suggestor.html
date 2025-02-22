@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hotel Suggester with Embedded Map</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-image: url("https://t4.ftcdn.net/jpg/02/84/46/89/360_F_284468940_1bg6BwgOfjCnE3W0wkMVMVqddJgtMynE.jpg");
+      background-size: cover;
+      text-align: center;
+      padding-bottom: 40px;
+      margin: 0;
+    }
+    h1 {
+      color: white;
+      padding: 20px;
+      margin: 0;
+    }
+    #hotel-list {
+      max-width: 600px;
+      margin: 20px auto;
+    }
+    .hotel-card {
+      background: white;
+      padding: 15px;
+      margin: 10px;
+      border-radius: 8px;
+      box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+      text-align: left;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .hotel-card:hover {
+      background: #f0f0f0;
+    }
+    .hotel-card h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+    .hotel-card p {
+      margin: 5px 0;
+      font-size: 14px;
+    }
+    /* Modal overlay */
+    #modalOverlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+    }
+    /* Action Modal */
+    #actionModal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.6);
+      z-index: 1000;
+      width: 90%;
+      max-width: 450px;
+    }
+    .modalHeader {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin-bottom: 15px;
+    }
+    .modalHeader h3 {
+      margin: 0;
+      text-align: center;
+      width: 100%;
+      font-size: 20px;
+    }
+    /* "X" symbol in a red circle for closing */
+    .closeIcon {
+      position: absolute;
+      right: 0;
+      background-color: red;
+      color: white;
+      font-weight: bold;
+      border-radius: 50%;
+      padding: 4px 8px;
+      cursor: pointer;
+      font-size: 18px;
+      line-height: 1;
+    }
+    /* Increase the size of the "View Map" button */
+    #viewMapBtn {
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 8px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    #viewMapBtn:hover {
+      background-color: #0056b3;
+    }
+
+    /* Embedded Map Container */
+    #mapEmbedContainer {
+      max-width: 600px;
+      margin: 20px auto;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Recommended Hotels</h1>
+  <div id="hotel-list"></div>
+
+  <!-- Modal overlay -->
+  <div id="modalOverlay"></div>
+
+  <!-- Action Modal -->
+  <div id="actionModal">
+    <div class="modalHeader">
+      <h3 id="modalHotelName">Hotel Name</h3>
+      <div class="closeIcon" id="topCloseIcon">&times;</div>
+    </div>
+    <p id="modalMsg">Below click "View Map" to see the directions and reviews.</p>
+    <button id="viewMapBtn">View Map</button>
+  </div>
+
+  <!-- Embedded Map Container -->
+  <div id="mapEmbedContainer"></div>
+
+  <script>
+    // Retrieve user requirements from localStorage
+    function getUserRequirements() {
+      const selectedLocation = localStorage.getItem("selectedLocation") || "";
+      const selectedFoodTypes = JSON.parse(localStorage.getItem("selectedFoodTypes") || "[]");
+      const selectedCuisines = JSON.parse(localStorage.getItem("selectedCuisines") || "[]");
+      return { selectedLocation, selectedFoodTypes, selectedCuisines };
+    }
+
+    // Helper: Check if two arrays intersect (case-insensitive)
+    function arraysIntersect(arr1, arr2) {
+      return arr1.some(item => arr2.includes(item.toLowerCase()));
+    }
+
+    // Helper: Is the hotel exclusively veg?
+    function isExclusivelyVeg(foodTypes) {
+      if (!Array.isArray(foodTypes)) return false;
+      const lower = foodTypes.map(ft => ft.toLowerCase());
+      return !lower.includes("nonvegetarian");
+    }
+
+    // Evaluate if a hotel matches the user's selected food types
+    function matchFoodType(userFoodTypes, hotelFoodTypes) {
+      if (!Array.isArray(hotelFoodTypes)) return false;
+      const userHasPureVeg = userFoodTypes.includes("purevegetarian");
+      const userHasVegNonVeg = userFoodTypes.includes("vegetariannonvegetarian");
+
+      if (userHasPureVeg && userHasVegNonVeg) {
+        return true;
+      }
+      if (userHasPureVeg && !userHasVegNonVeg) {
+        return isExclusivelyVeg(hotelFoodTypes);
+      }
+      if (!userHasPureVeg && userHasVegNonVeg) {
+        const lower = hotelFoodTypes.map(ft => ft.toLowerCase());
+        return lower.includes("nonvegetarian");
+      }
+      return false;
+    }
+
+    function fetchHotels() {
+      const firebaseURL =
+        "https://hotelsuggester-199e2-default-rtdb.asia-southeast1.firebasedatabase.app/hotels.json";
+
+      fetch(firebaseURL)
+        .then(response => response.json())
+        .then(data => {
+          if (!data) {
+            document.getElementById("hotel-list").innerHTML = "<p>No hotels found.</p>";
+            return;
+          }
+          // If data is under a "hotels" property, use that
+          const hotelsData = data.hotels ? data.hotels : data;
+
+          const { selectedLocation, selectedFoodTypes, selectedCuisines } = getUserRequirements();
+
+          const filteredHotels = Object.entries(hotelsData).filter(([key, hotel]) => {
+            // Location filtering
+            let locationMatch = true;
+            if (selectedLocation) {
+              if (!hotel.location) locationMatch = false;
+              else {
+                locationMatch = hotel.location.toLowerCase().includes(selectedLocation.toLowerCase());
+              }
+            }
+
+            // Food type filtering
+            const foodTypeMatch = matchFoodType(selectedFoodTypes, hotel.food_type);
+
+            // Cuisine filtering
+            let cuisineMatch = true;
+            if (selectedCuisines.length > 0) {
+              if (Array.isArray(hotel.cuisine)) {
+                const lowerHotelCuisines = hotel.cuisine.map(c => c.toLowerCase());
+                cuisineMatch = arraysIntersect(selectedCuisines, lowerHotelCuisines);
+              } else {
+                cuisineMatch = false;
+              }
+            }
+            return locationMatch && foodTypeMatch && cuisineMatch;
+          });
+
+          if (filteredHotels.length === 0) {
+            document.getElementById("hotel-list").innerHTML =
+              "<p>No recommended hotels found based on your selection.</p>";
+            return;
+          }
+
+          // Build hotel cards
+          const hotelsHTML = filteredHotels.map(([key, hotel]) => {
+            // Remove underscores from the displayed name
+            const displayName = key.replace(/_/g, " ");
+            const displayFoodType = Array.isArray(hotel.food_type) ? hotel.food_type.join(", ") : "Not specified";
+            const displayCuisine = Array.isArray(hotel.cuisine) ? hotel.cuisine.join(", ") : "Not specified";
+            const rating = hotel.rating || "N/A";
+            return `
+              <div class="hotel-card" data-key="${key}">
+                <h3><b>${displayName}</b></h3>
+                <p>Food Type: ${displayFoodType}</p>
+                <p>Cuisine: ${displayCuisine}</p>
+                <p>Rating: ⭐ ${rating}</p>
+              </div>
+            `;
+          }).join("");
+
+          document.getElementById("hotel-list").innerHTML = hotelsHTML;
+
+          // Attach click event to each hotel card to open the modal
+          document.querySelectorAll(".hotel-card").forEach(card => {
+            card.addEventListener("click", () => {
+              const key = card.getAttribute("data-key");
+              const hotel = hotelsData[key];
+              openActionModal(key, hotel);
+            });
+          });
+        })
+        .catch(error => {
+          console.error("Error fetching hotels:", error);
+          document.getElementById("hotel-list").innerHTML = "<p>Error fetching hotel data.</p>";
+        });
+    }
+
+    // Modal & View Map
+    function openActionModal(key, hotel) {
+      // Remove underscores from the displayed name in the modal
+      const displayName = key.replace(/_/g, " ");
+      document.getElementById("modalHotelName").innerText = hotel.name || displayName;
+      document.getElementById("modalMsg").innerText = `Below click "View Map" to see the directions and reviews.`;
+
+      // "View Map" button
+      document.getElementById("viewMapBtn").onclick = () => {
+        if (hotel.mapEmbed) {
+          const mapContainer = document.getElementById("mapEmbedContainer");
+          mapContainer.innerHTML = hotel.mapEmbed;
+          mapContainer.style.display = "block";
+        } else {
+          alert("No embedded map available for this hotel.");
+        }
+        closeModal();
+      };
+
+      // Show modal and overlay
+      document.getElementById("actionModal").style.display = "block";
+      document.getElementById("modalOverlay").style.display = "block";
+    }
+
+    // Red "X" close
+    document.getElementById("topCloseIcon").onclick = closeModal;
+
+    function closeModal() {
+      document.getElementById("actionModal").style.display = "none";
+      document.getElementById("modalOverlay").style.display = "none";
+    }
+
+    // Initialize on page load
+    document.addEventListener("DOMContentLoaded", fetchHotels);
+  </script>
+</body>
+</html>

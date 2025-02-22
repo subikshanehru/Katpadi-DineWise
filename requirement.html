@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Requirement Collector Module</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-image: url("https://t4.ftcdn.net/jpg/02/84/46/89/360_F_284468940_1bg6BwgOfjCnE3W0wkMVMVqddJgtMynE.jpg");
+      background-size: cover;
+    }
+    
+    h1 {
+      text-align: center;
+      color: white;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      width: 400px;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 8px;
+      background-color: white;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .checkbox-container {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 10px; /* Adds spacing between checkbox and text */
+      white-space: nowrap; /* Ensures text does not wrap to the next line */
+    }
+
+    .checkbox-label input {
+      margin-left: 10px;
+    }
+
+    .button {
+      background-color: #007bff;
+      color: white;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 4px;
+      margin-top: 15px;
+    }
+
+    .error-message {
+      color: red;
+      text-align: center;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Requirement Collector</h1>
+
+  <form id="requirementForm">
+    <div id="error" class="error-message"></div>
+
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required />
+
+    <label for="phoneNumber">Phone Number:</label>
+    <div style="display: flex; align-items: center;">
+      <span style="margin-right: 5px; font-weight: bold;">+91</span>
+      <input type="text" id="phoneNumber" name="phoneNumber" maxlength="10" required />
+    </div>
+
+    <label for="location">Location:</label>
+    <select id="location" name="location" required>
+      <option value="">Select a location</option>
+      <option value="vit_road_katpadi">VIT Road Katpadi</option>
+      <option value="gandhi_nagar_katpadi">Gandhi Nagar Katpadi</option>
+    </select>
+
+    <label>Food Type:</label>
+    <div class="checkbox-container">
+      <label class="checkbox-label">
+        <input type="checkbox" id="purevegetarian" name="foodType" value="purevegetarian" />
+        Pure Vegetarian
+      </label>
+      <label class="checkbox-label">
+        <input type="checkbox" id="vegetariannonVegetarian" name="foodType" value="vegetariannonvegetarian" />
+        Vegetarian & Non-Vegetarian
+      </label>
+    </div>
+
+    <label>Cuisine:</label>
+    <div class="checkbox-container">
+      <label class="checkbox-label">
+        <input type="checkbox" id="southIndian" name="cuisine" value="southindian" /> South Indian
+      </label>
+      <label class="checkbox-label">
+        <input type="checkbox" id="northIndian" name="cuisine" value="northindian" /> North Indian
+      </label>
+      <label class="checkbox-label">
+        <input type="checkbox" id="chinese" name="cuisine" value="chinese" /> Chinese
+      </label>
+      <label class="checkbox-label">
+        <input type="checkbox" id="beverages" name="cuisine" value="beverages" /> Beverages
+      </label>
+      <label class="checkbox-label">
+        <input type="checkbox" id="seafood" name="cuisine" value="seafood" /> Seafood
+      </label>
+      <label class="checkbox-label">
+        <input type="checkbox" id="arabian" name="cuisine" value="arabian" /> Arabian
+      </label>
+      <label class="checkbox-label">
+        <input type="checkbox" id="italian" name="cuisine" value="italian" /> Italian
+      </label>
+      <label class="checkbox-label">
+        <input type="checkbox" id="burgers" name="cuisine" value="burgers" /> Burgers
+      </label>
+      <label class="checkbox-label">
+        <input type="checkbox" id="biryani" name="cuisine" value="biryani" /> Biryani
+      </label>
+      <label class="checkbox-label">
+        <input type="checkbox" id="american" name="cuisine" value="american" /> American
+      </label>
+      <label class="checkbox-label">
+        <input type="checkbox" id="pizza" name="cuisine" value="pizza" /> Pizza
+      </label>
+      <label class="checkbox-label">
+        <input type="checkbox" id="momos" name="cuisine" value="momos" /> Momos
+      </label>
+    </div>
+
+    <button type="submit" class="button">Search Hotels</button>
+  </form>
+
+  <script>
+    // Fetch stored user data from localStorage (if any)
+    document.addEventListener("DOMContentLoaded", function () {
+      const savedName = localStorage.getItem("username");
+      const savedPhone = localStorage.getItem("phoneNumber");
+      if (savedName) document.getElementById("name").value = savedName;
+      if (savedPhone) document.getElementById("phoneNumber").value = savedPhone;
+
+      // Add event listeners to the food type checkboxes to enforce only one selection at a time
+      const pureVegCheckbox = document.getElementById("purevegetarian");
+      const vegNonVegCheckbox = document.getElementById("vegetariannonVegetarian");
+
+      pureVegCheckbox.addEventListener("change", function() {
+        if (this.checked) {
+          vegNonVegCheckbox.checked = false;
+        }
+      });
+
+      vegNonVegCheckbox.addEventListener("change", function() {
+        if (this.checked) {
+          pureVegCheckbox.checked = false;
+        }
+      });
+    });
+
+    // Validate, store to localStorage, and redirect
+    document.getElementById("requirementForm").addEventListener("submit", function (event) {
+      event.preventDefault(); // Stop default form submission
+
+      const name = document.getElementById("name").value.trim();
+      const phoneNumber = document.getElementById("phoneNumber").value.trim();
+      const location = document.getElementById("location").value;
+      const foodTypeElems = document.querySelectorAll('input[name="foodType"]:checked');
+      const cuisineElems = document.querySelectorAll('input[name="cuisine"]:checked');
+      const errorDiv = document.getElementById("error");
+
+      errorDiv.textContent = ""; // Clear previous errors
+
+      // Basic validations
+      if (!name) {
+        errorDiv.textContent = "Name is required.";
+        return;
+      }
+      if (phoneNumber.length !== 10 || isNaN(phoneNumber)) {
+        errorDiv.textContent = "Please enter a valid 10-digit phone number.";
+        return;
+      }
+      if (!location) {
+        errorDiv.textContent = "Location is required.";
+        return;
+      }
+      if (foodTypeElems.length === 0) {
+        errorDiv.textContent = "Please select at least one food type.";
+        return;
+      }
+      if (cuisineElems.length === 0) {
+        errorDiv.textContent = "Please select at least one cuisine.";
+        return;
+      }
+
+      // Save data to localStorage
+      localStorage.setItem("username", name);
+      localStorage.setItem("phoneNumber", phoneNumber);
+      localStorage.setItem("selectedLocation", location);
+
+      // Convert NodeLists to arrays
+      const selectedFoodTypes = Array.from(foodTypeElems).map(el => el.value);
+      const selectedCuisines = Array.from(cuisineElems).map(el => el.value.toLowerCase());
+
+      localStorage.setItem("selectedFoodTypes", JSON.stringify(selectedFoodTypes));
+      localStorage.setItem("selectedCuisines", JSON.stringify(selectedCuisines));
+
+      // Redirect to the hotel suggester page
+      window.location.href = "hotel_suggestor.html";
+    });
+
+    // Optional: Debug form data (remove if not needed)
+    const requirementForm = document.getElementById("requirementForm");
+    requirementForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const formData = new FormData(requirementForm);
+      console.log("Submitted data:", Object.fromEntries(formData.entries()));
+    });
+  </script>
+</body>
+</html>

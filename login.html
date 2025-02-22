@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-image: url("https://t4.ftcdn.net/jpg/02/84/46/89/360_F_284468940_1bg6BwgOfjCnE3W0wkMVMVqddJgtMynE.jpg");
+      background-size: cover;
+    }
+
+    h1 {
+      text-align: center;
+      color: white;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .login-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 60vh;
+    }
+
+    form {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 300px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    /* Make inputs and button the same width */
+    input[type="text"],
+    button {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 8px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    
+
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .error-message {
+      color: red;
+      text-align: center;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    /* Optional: style the +91 span */
+    .mobile-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .mobile-container span {
+      font-weight: bold;
+      margin-right: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Login</h1>
+  <div class="login-container">
+    <form id="login-form" autocomplete="off">
+      <div id="error" class="error-message"></div>
+      
+      <label for="username">Username:</label>
+      <!-- Username must start with a letter, can contain letters/numbers only -->
+      <input
+        type="text"
+        id="username"
+        name="username"
+        required
+        pattern="^[A-Za-z][A-Za-z0-9]*$"
+        title="Username must start with a letter and contain only letters/numbers."
+      >
+
+      <label for="mobile">Mobile Number:</label>
+      <div class="mobile-container">
+        <span>+91</span>
+        <input
+          type="text"
+          id="mobile"
+          name="mobile"
+          maxlength="10"
+          required
+          placeholder="XXXXXXXXXX"
+        >
+      </div>
+
+      <!-- Removed the Remember Me checkbox entirely -->
+
+      <button type="submit">SUBMIT</button>
+    </form>
+  </div>
+
+  <script>
+    // Restrict mobile field to digits only, up to 10
+    document.getElementById('mobile').addEventListener('input', function(event) {
+      let value = event.target.value.replace(/\D/g, ''); // Remove non-numeric characters
+      if (value.length > 10) {
+        value = value.substring(0, 10); // Limit to 10 digits
+      }
+      event.target.value = value;
+    });
+
+    // Validate and submit form
+    document.getElementById('login-form').addEventListener('submit', function(event) {
+      event.preventDefault(); // Stop default form submission
+
+      const username = document.getElementById('username').value.trim();
+      const mobile = document.getElementById('mobile').value.trim();
+      const errorDiv = document.getElementById('error');
+
+      errorDiv.textContent = ""; // Clear previous errors
+
+      // Check username pattern
+      if (!username.match(/^[A-Za-z][A-Za-z0-9]*$/)) {
+        errorDiv.textContent = "Username must start with a letter and contain only letters and numbers.";
+        return;
+      }
+
+      // Mobile validation
+      if (mobile.length !== 10 || isNaN(mobile)) {
+        errorDiv.textContent = "Please enter a valid 10-digit mobile number.";
+        return;
+      }
+
+      // Store username and phone number in localStorage
+      localStorage.setItem("username", username);
+      localStorage.setItem("phoneNumber", mobile);
+
+      // Redirect to requirement.html in the same tab
+      window.location.href = "requirement.html";
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+{
+  "hotels": {
+    "default": {
+      "name": "Hive Food Street",
+      "food_type": ["vegetarian", "nonvegetarian"],
+      "cuisine": ["southindian", "northindian", "chinese", "beverages", "biryani"],
+      "location": "vit_road_katpadi",
+      "rating": 4.7,
+      "mapEmbed":"<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.0838633491067!2d79.1593551101132!3d12.96648531493866!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bad470008de892b%3A0x45c25dc13c861e09!2sHIVE%20FOOD%20STREET!5e0!3m2!1sen!2sin!4v1740119204883!5m2!1sen!2sin\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>"
+    },
+    "Amritha": {
+      "food_type": ["purevegetarian"],
+      "cuisine": ["southindian", "northindian", "chinese", "beverages"],
+      "location": "gandhi_nagar_katpadi",
+      "rating": 4.2,
+      "mapEmbed":"<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.327375278476!2d79.13417241011295!3d12.950891215280341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bad47b373a17335%3A0x88a71872529dc036!2sAmirtha%20fine%20dining!5e0!3m2!1sen!2sin!4v1739906700284!5m2!1sen!2sin\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>"
+    },
+    "The_vellore_kitchen": {
+      "food_type": ["vegetarian", "nonvegetarian"],
+      "cuisine": ["southindian", "chinese", "northindian", "beverages", "seafood", "arabian", "italian"],
+      "location": "gandhi_nagar_katpadi",
+      "rating": 4.5,
+      "mapEmbed":"<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.3442778863364!2d79.13477541011292!3d12.949808115304075!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bad47971a736435%3A0x512dc27a99ff6a1b!2sThe%20Vellore%20Kitchen%20%7C%20Gandhi%20Nagar!5e0!3m2!1sen!2sin!4v1739907210565!5m2!1sen!2sin\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>"
+    },
+    "Thambri_biryani_kadai": {
+      "food_type": ["vegetarian", "nonvegetarian"],
+      "cuisine": ["southindian", "chinese", "beverages", "seafood", "arabian"],
+      "location": "gandhi_nagar_katpadi",
+      "rating": 4.5,
+      "mapEmbed":"<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.147179697206!2d79.13489461011318!3d12.962432415027568!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bad472a2ca0c20f%3A0x9621ebb32da35be2!2sThambi%20biryani!5e0!3m2!1sen!2sin!4v1740119337201!5m2!1sen!2sin\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>"
+    },
+    "Darling_nammma_veedu": {
+      "food_type": ["vegetarian", "nonvegetarian"],
+      "cuisine": ["southindian", "chinese", "northindian", "beverages", "seafood", "arabian", "italian"],
+      "location": "gandhi_nagar_katpadi",
+      "rating": 3.8,
+      "mapEmbed":"<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d62210.3334794401!2d79.09617837431696!3d12.962518024567485!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bad47693749024b%3A0xe6772afb0fa1d737!2sDarling%20Namma%20Veedu!5e0!3m2!1sen!2sin!4v1740119507814!5m2!1sen!2sin\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>"
+    },
+    "Baby_restaurant": {
+      "food_type": ["vegetarian", "nonvegetarian"],
+      "cuisine": ["southindian", "northindian", "biryani", "chinese"],
+      "location": "vit_road_katpadi",
+      "rating": 4.5,
+      "mapEmbed":"<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.04968421627!2d79.1404455101132!3d12.968672614890808!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bad470021a47f29%3A0xd777378a1f25f142!2sBaby%20Restaurant!5e0!3m2!1sen!2sin!4v1740119655062!5m2!1sen!2sin\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>"
+    },
+    "Chai_Galli": {
+      "food_type": ["purevegetarian"],
+      "cuisine": ["northindian", "italian", "pizza", "burgers"],
+      "location": "gandhi_nagar_katpadi",
+      "rating": 4.5,
+      "mapEmbed":"<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.340445231408!2d79.1352264101129!3d12.95005371529871!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bad47067d203871%3A0xb10e115808776558!2sChai%20Galli!5e0!3m2!1sen!2sin!4v1739907100695!5m2!1sen!2sin\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>"
+    },
+    "Zaitoon": {
+      "food_type": ["vegetarian", "nonVegetarian"],
+      "cuisine": ["southindian", "chinese", "northindian", "beverages", "seafood", "arabian", "italian", "burgers", "american", "arabian"],
+      "location": "vit_road_katpadi",
+      "rating": 4.0,
+      "mapEmbed":"<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.058716696325!2d79.1477935101132!3d12.968094614903457!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bad47f763c85d59%3A0x2f4f7b4f49d37f24!2sZaitoon%20Restaurant%2C%20Vellore!5e0!3m2!1sen!2sin!4v1740119792501!5m2!1sen!2sin\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>"
+    },
+    "McDonald's": {
+      "food_type": ["vegetarian", "nonvegetarian"],
+      "cuisine": ["burgers", "american"],
+      "location": "vit_road_katpadi",
+      "rating": 4.5,
+      "mapEmbed":"<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.05941052445!2d79.14670141011327!3d12.96805021490436!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bad47e62c066b51%3A0xa83943ec6bb12913!2sMcDonald&#39;s!5e0!3m2!1sen!2sin!4v1740119883113!5m2!1sen!2sin\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>"
+    },
+    "Burger_King": {
+      "food_type": ["vegetarian", "nonvegetarian"],
+      "cuisine": ["burgers", "american"],
+      "location": "gandhi_nagar_katpadi",
+      "rating": 4.4,
+      "mapEmbed":"<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.153880602375!2d79.13472141011307!3d12.962003415036932!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bad4748b241b341%3A0x9ba3acb52689ac4d!2sBurger%20King!5e0!3m2!1sen!2sin!4v1740119982172!5m2!1sen!2sin\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>"
+    },
+    "Pizzza_Hut": {
+      "food_type": ["vegetarian", "nonvegetarian"],
+      "cuisine": ["pizza", "burgers", "american"],
+      "location": "vit_road_katpadi",
+      "rating": 4.8,
+      "mapEmbed":"<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.05276749313!2d79.14772071011318!3d12.968475314895075!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bad4769cb4d12e1%3A0x4490b6136c7d9b4f!2sPizza%20Hut%20%7C%20Selvam%20Nagar%2C%20Vellore!5e0!3m2!1sen!2sin!4v1740120075139!5m2!1sen!2sin\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>"
+    },
+    "Domino's": {
+      "food_type": ["vegetarian", "nonvegetarian"],
+      "cuisine": ["pizza", "burgers", "american"],
+      "location": "gandhi_nagar_katpadi",
+      "rating": 4.6,
+      "mapEmbed":"<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.010822849837!2d79.16073071011328!3d12.97115911483619!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bad4764d73cb57b%3A0x9ef37ef2aa8686a0!2sDomino&#39;s%20Pizza%20%7C%20Katpadi%2C%20Vellore!5e0!3m2!1sen!2sin!4v1739909369841!5m2!1sen!2sin\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>"
+    },
+    "Wow!_Momo": {
+      "food_type": ["vegetarian", "nonvegetarian"],
+      "cuisine": ["chinese", "momos"],
+      "location": "vit_road_katpadi",
+      "rating": 4.4,
+      "mapEmbed":"<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.0599887127682!2d79.14748271011315!3d12.968013214905284!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bad47e12a9731a9%3A0x275ead2463857d6f!2sWow*21%20Momo!5e0!3m2!1sen!2sin!4v1740120202580!5m2!1sen!2sin\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>"
+    }
+  }
+}
