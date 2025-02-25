@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Katpadi - Find My Hotel | Login</title>
+  <title>Katpadi - DineWise | Login</title>
   <style>
     body {
       margin: 0;
@@ -92,8 +92,8 @@
   </style>
 </head>
 <body>
-  <div class="app-header">Katpadi - Find My Hotel</div>
-  <div class="sub-header">Login To Find Hotel</div>
+  <div class="app-header">Katpadi - DineWise</div>
+  <div class="sub-header">Register To Find Restaurant</div>
   <div class="login-container">
     <form id="login-form" autocomplete="off">
       <div id="error" class="error-message"></div>
@@ -105,7 +105,7 @@
         id="username"
         name="username"
         required
-        pattern="^[A-Za-z][A-Za-z0-9]*$"
+        pattern="^[A-Za-z][A-Za-z0-9 .]*[A-Za-z0-9 ]$"
         title="Username must start with a letter and contain only letters/numbers."
       >
 
@@ -158,7 +158,7 @@
       errorDiv.textContent = ""; // Clear previous errors
 
       // Check username pattern
-      if (!username.match(/^[A-Za-z][A-Za-z0-9]*$/)) {
+      if (!username.match(/^[A-Za-z][A-Za-z0-9 .]*[A-Za-z0-9 ]$/)) {
         errorDiv.textContent = "Username must start with a letter and contain only letters and numbers.";
         return;
       }
