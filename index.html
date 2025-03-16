@@ -3,6 +3,120 @@
 <head>
   <meta charset="UTF-8">
   <title>Katpadi - DineWise | Login</title>
+  <script type="module">
+    // Import Firebase SDK
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+    // Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDcovr8T37_Iu__1yaIRlPlg71my8673_0",
+      authDomain: "hotelsuggester-199e2.firebaseapp.com",
+      projectId: "hotelsuggester-199e2",
+      storageBucket: "hotelsuggester-199e2.firebasestorage.app",
+      messagingSenderId: "656514407181",
+      appId: "1:656514407181:web:5409958d600a5fc485ee44"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Toggle Forms
+    window.showSignUp = function() {
+      document.getElementById("login-box").style.display = "none";
+      document.getElementById("signup-box").style.display = "block";
+    }
+
+    window.showLogin = function() {
+      document.getElementById("signup-box").style.display = "none";
+      document.getElementById("login-box").style.display = "block";
+    }
+
+    window.showLogin = function() {
+      document.getElementById("signup-box").style.display = "none";  
+      document.getElementById("reset-password-box").style.display = "none"; // Hide reset password form  
+      document.getElementById("login-box").style.display = "block";  
+    };
+
+    // Login Functionality
+    document.getElementById("login-btn").addEventListener("click", function() {
+      const email = document.getElementById("login-email").value.trim();
+      const password = document.getElementById("login-password").value.trim();
+      const errorDiv = document.getElementById("login-error");
+
+      errorDiv.textContent = "";
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Redirect to requirement page immediately after login
+          window.location.href = "requirement.html"; 
+        })
+        .catch((error) => {
+          errorDiv.textContent = error.message;
+        });
+    });
+
+   
+    document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("forgot-password-link").addEventListener("click", function () {
+      document.getElementById("login-box").style.display = "none";  
+      document.getElementById("reset-password-box").style.display = "block";  
+    });
+  });
+
+
+    // Handle Password Reset
+    document.getElementById("reset-password-btn").addEventListener("click", function () {
+      const resetEmail = document.getElementById("reset-email").value.trim();
+      const resetError = document.getElementById("reset-error");
+
+      resetError.textContent = ""; // Clear previous errors
+
+      if (resetEmail) {
+        import("https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js").then(({ getAuth, sendPasswordResetEmail }) => {
+          const auth = getAuth();
+          sendPasswordResetEmail(auth, resetEmail)
+            .then(() => {
+              document.getElementById("success-dialog").style.display = "block"; // Show success dialog
+            })
+            .catch((error) => {
+              resetError.textContent = error.message;
+            });
+        });
+      } else {
+        resetError.textContent = "Please enter your email.";
+      }
+  });
+
+    // Close Success Dialog
+    document.getElementById("close-dialog").addEventListener("click", function () {
+      document.getElementById("success-dialog").style.display = "none";
+      showLogin(); // Redirect back to login form
+  });
+
+
+
+    // Sign Up Functionality
+    document.getElementById("signup-btn").addEventListener("click", function() {
+      const name = document.getElementById("signup-name").value.trim();
+      const email = document.getElementById("signup-email").value.trim();
+      const password = document.getElementById("signup-password").value.trim();
+      const errorDiv = document.getElementById("signup-error");
+
+      errorDiv.textContent = "";
+
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          alert("Sign Up Successful! Now try logging in.");
+          showLogin(); // Switch to Login Form
+        })
+        .catch((error) => {
+          errorDiv.textContent = error.message;
+        });
+    });
+  </script>
+
   <style>
     body {
       margin: 0;
@@ -10,7 +124,7 @@
       background-image: url("https://t4.ftcdn.net/jpg/02/84/46/89/360_F_284468940_1bg6BwgOfjCnE3W0wkMVMVqddJgtMynE.jpg");
       background-size: cover;
     }
-    /* App Name */
+
     .app-header {
       font-size: 42px;
       font-weight: bold;
@@ -19,7 +133,6 @@
       text-align: center;
     }
 
-    /* Subtext for login */ 
     .sub-header {
       font-size: 22px;
       color: white;
@@ -27,19 +140,20 @@
       text-align: center;
     }
 
-    .login-container {
+    .container {
       display: flex;
       justify-content: center;
       align-items: center;
       height: 60vh;
     }
 
-    form {
+    .box {
       background: white;
       padding: 20px;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       width: 300px;
+      text-align: center;
     }
 
     label {
@@ -47,19 +161,21 @@
       margin-bottom: 5px;
     }
 
-    /* Make inputs and button the same width */
-    input[type="text"],
-    button {
-      width: 100%;
-      box-sizing: border-box;
+    input {
+      width: 90%; 
+      max-width: 300px; 
       padding: 8px;
-      margin-bottom: 10px;
+      margin: 10px auto; 
       border-radius: 4px;
       border: 1px solid #ccc;
       font-size: 14px;
+      display: block; 
+      text-align: left; 
     }
 
     button {
+      width: 100%;
+      padding: 10px;
       background-color: #007bff;
       color: white;
       border: none;
@@ -79,104 +195,101 @@
       margin-bottom: 10px;
     }
 
-    /* Optional: style the +91 span */
-    .mobile-container {
-      display: flex;
-      align-items: center;
+    .toggle-link {
+      margin-top: 10px;
+      color: #007bff;
+      cursor: pointer;
+      text-decoration: underline;
+      display: block;
+    }
+
+    .dialog-box {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+
+    .dialog-box p {
       margin-bottom: 10px;
     }
-    .mobile-container span {
-      font-weight: bold;
-      margin-right: 5px;
+
+    .dialog-box button {
+      padding: 8px 16px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
     }
+
+    .dialog-box button:hover {
+      background-color: #0056b3;
+    }
+
   </style>
 </head>
 <body>
   <div class="app-header">Katpadi - DineWise</div>
-  <div class="sub-header">Register To Find Restaurant</div>
-  <div class="login-container">
-    <form id="login-form" autocomplete="off">
-      <div id="error" class="error-message"></div>
-      
-      <label for="username">Username:</label>
-      <!-- Username must start with a letter, can contain letters/numbers only -->
-      <input
-        type="text"
-        id="username"
-        name="username"
-        required
-        pattern="^[A-Za-z][A-Za-z0-9 .]*[A-Za-z0-9 ]$"
-        title="Username must start with a letter and contain only letters/numbers."
-      >
+  <div class="sub-header">Login </div>
 
-      <label for="mobile">Mobile Number:</label>
-      <div class="mobile-container">
-        <span>+91</span>
-        <input
-          type="text"
-          id="mobile"
-          name="mobile"
-          maxlength="10"
-          required
-          placeholder="XXXXXXXXXX"
-        >
-      </div>
+  <div class="container">
+    <!-- Login Form -->
+    <div class="box" id="login-box">
+      <div id="login-error" class="error-message"></div>
 
-      <!-- Removed the Remember Me checkbox entirely -->
+      <label for="login-email">Email:</label>
+      <input type="email" id="login-email" required placeholder="Enter your email">
 
-      <button type="submit">SUBMIT</button>
-    </form>
+      <label for="login-password">Password:</label>
+      <input type="password" id="login-password" required placeholder="Enter your password">
+
+      <button id="login-btn">Login</button>
+
+      <p class="toggle-link" onclick="showSignUp()">New user? Try Sign Up</p>
+      <p class="toggle-link" id="forgot-password-link">Forgot Password?</p>
+    </div>
+
+    <!-- Sign Up Form (Initially Hidden) -->
+    <div class="box" id="signup-box" style="display: none;">
+      <div id="signup-error" class="error-message"></div>
+
+      <label for="signup-name">Name:</label>
+      <input type="text" id="signup-name" required placeholder="Enter your name">
+
+      <label for="signup-email">Email:</label>
+      <input type="email" id="signup-email" required placeholder="Enter your email">
+
+      <label for="signup-password">Password:</label>
+      <input type="password" id="signup-password" required placeholder="Enter your password">
+
+      <button id="signup-btn">Sign Up</button>
+
+      <p class="toggle-link" onclick="showLogin()">Already have an account? Try Login</p>
+    </div>
+    <!-- Password Reset Form (Initially Hidden) -->
+    <div class="box" id="reset-password-box" style="display: none;">
+      <div id="reset-error" class="error-message"></div>
+
+      <label for="reset-email">Enter Your Email:</label>
+      <input type="email" id="reset-email" required placeholder="Enter your email">
+
+      <button id="reset-password-btn">Reset Password</button>
+
+      <p class="toggle-link" onclick="showLogin()">Back to Login</p>
+    </div>
+        <!-- Success Dialog Box (Initially Hidden) -->
+    <div id="success-dialog" class="dialog-box">
+      <p>Password reset link sent successfully to your email. Please check your inbox.</p>
+      <button id="close-dialog">OK</button>
+    </div>
+
   </div>
-
-  <script>
-    // Restrict mobile field to digits only, up to 10
-    document.getElementById('mobile').addEventListener('input', function(event) {
-      let value = event.target.value.replace(/\D/g, ''); // Remove non-numeric characters
-      if (value.length > 10) {
-        value = value.substring(0, 10); // Limit to 10 digits
-      }
-      event.target.value = value;
-    });
-
-    // Capitalize first letter of username automatically
-    document.getElementById('username').addEventListener('input', function(event) {
-      let value = event.target.value;
-      if (value.length > 0) {
-        event.target.value = value.charAt(0).toUpperCase() + value.slice(1);
-      }
-    });
-
-    // Validate and submit form
-    
-    document.getElementById('login-form').addEventListener('submit', function(event) {
-      event.preventDefault(); // Stop default form submission
-
-      const username = document.getElementById('username').value.trim();
-      const mobile = document.getElementById('mobile').value.trim();
-      const errorDiv = document.getElementById('error');
-
-      errorDiv.textContent = ""; // Clear previous errors
-
-      // Check username pattern
-      if (!username.match(/^[A-Za-z][A-Za-z0-9 .]*[A-Za-z0-9 ]$/)) {
-        errorDiv.textContent = "Username must start with a letter and contain only letters and numbers.";
-        return;
-      }
-
-      // Mobile validation: 10-digit number & must start with 6, 7, 8, or 9
-      if (!mobile.match(/^[6789]\d{9}$/)) {
-        errorDiv.textContent = "Please enter a valid 10-digit mobile number.";
-        return;
-      }
-
-      // Store username and phone number in localStorage
-      localStorage.setItem("username", username);
-      localStorage.setItem("phoneNumber", mobile);
-
-      // Redirect to requirement.html in the same tab
-      window.location.href = "requirement.html";
-    });
-
-  </script>
 </body>
 </html>
